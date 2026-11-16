@@ -62,9 +62,7 @@
   .toc li a{display:flex;justify-content:space-between;gap:1rem;padding:.06rem 0;transition:opacity .2s}
   .toc ol:hover a{opacity:.45}
   .toc ol a:hover{opacity:1}
-  .toc .sec{margin-top:.6rem}
-  .toc .sec:first-child{margin-top:0}
-  .toc .sec>a{font-weight:600}
+  .toc .sec>a{padding:.12rem 0}
   .toc .sub a{padding-left:1.1rem;color:var(--ink)}
   .toc .n{font-variant-numeric:tabular-nums}
   .idx-title{margin-left:9vw;margin-top:16svh}
@@ -280,8 +278,7 @@ SPREADS.forEach(sp => {
   el.id = 'p-' + sp.id;
   if (sp.type === 'index') {
     const toc = BOOK.map(sec => `
-      <li class="sec"><a href="#${sec.id}"><span>${esc(sec.title)}</span><span class="n">${pageOf(sec.id)}</span></a></li>
-      ${sec.items.map(it => `<li class="sub"><a href="#${it.slug}"><span>${esc(it.title)}</span><span class="n">${pageOf(it.slug)}</span></a></li>`).join('')}`).join('')
+      <li class="sec"><a href="#${sec.id}"><span>${esc(sec.title)}</span><span class="n">${pageOf(sec.id)}</span></a></li>`).join('')
       + `<li class="sec"><a href="#showreel"><span>Showreel</span><span class="n">${pageOf('showreel')}</span></a></li>
          <li class="sec"><a href="#contacto"><span>Contacto</span><span class="n">${pageOf('contacto')}</span></a></li>`;
     el.innerHTML = `
