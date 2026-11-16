@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nicolás Royo — Director de fotografía</title>
+<meta name="description" content="Portfolio de Nicolás Royo, director de fotografía. Cortometrajes, videoclips y fashion films.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#232323;--bg2:#2b2b2b;--frame:#1a1a1a;
+    --text:#ecebe8;--muted:#9c9b97;--line:rgba(236,235,232,.14);
+    --gutter:clamp(1.25rem,5vw,4rem);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+  body{background:var(--bg);color:var(--text);font-family:"Archivo",system-ui,sans-serif;font-variation-settings:"wdth" 100;font-weight:350;font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  a:focus-visible,button:focus-visible{outline:1px solid var(--text);outline-offset:4px}
+  img{display:block;width:100%;height:100%;object-fit:cover;background:var(--frame);color:transparent}
+  .film:first-child{border-top:0}
+
+  .top{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:1.25rem var(--gutter);transition:background .3s}
+  .top.solid{background:rgba(35,35,35,.92);backdrop-filter:blur(8px)}
+  .name{font-weight:500;font-variation-settings:"wdth" 88;letter-spacing:.02em}
+  .top nav{display:flex;flex-wrap:nowrap;gap:clamp(1.1rem,3vw,2.5rem);font-size:.92rem;color:var(--muted)}
+  .top nav a:hover{color:var(--text)}
+
+  .open{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:6rem 0 3rem}
+  .open .still{aspect-ratio:2.39/1;width:100%;overflow:hidden}
+  .open .still img{animation:settle 2.2s cubic-bezier(.2,.6,.2,1) both}
+  @keyframes settle{from{opacity:0}to{opacity:1}}
+  .open .caption{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1.5rem var(--gutter) 0}
+  .open h1{font-weight:300;font-variation-settings:"wdth" 80;font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.15;letter-spacing:.005em}
+  .open h1 span{display:block;color:var(--muted)}
+  .open .credit{color:var(--muted);font-size:.85rem;text-align:right}
+
+  .index{padding:clamp(4rem,9vw,7rem) var(--gutter) clamp(2rem,5vw,4rem);max-width:80rem;margin:0 auto}
+  .section-title{font-weight:400;font-size:.92rem;color:var(--muted);margin-bottom:1.25rem}
+  .index ol{list-style:none;border-top:1px solid var(--line)}
+  .index li a{display:grid;grid-template-columns:1fr 6rem 1.5fr;gap:1.5rem;align-items:baseline;padding:1.1rem 0;border-bottom:1px solid var(--line);transition:padding .3s}
+  .index li a:hover{padding-left:.75rem}
+  .index .t{font-variation-settings:"wdth" 80;font-size:clamp(1.3rem,2.6vw,1.9rem);font-weight:400}
+  .index .y,.index .f{color:var(--muted);font-size:.92rem}
+
+  .films{max-width:80rem;margin:0 auto;padding:0 var(--gutter)}
+  .film{display:grid;grid-template-columns:minmax(14rem,1fr) 3fr;gap:clamp(1.5rem,4vw,3.5rem);padding:clamp(3.5rem,8vw,6rem) 0;border-top:1px solid var(--line);scroll-margin-top:4rem}
+  .film-info{position:sticky;top:6rem;align-self:start}
+  .film h2{font-weight:400;font-variation-settings:"wdth" 80;font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.1;margin-bottom:1rem}
+  .film dl{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;font-size:.92rem;margin-bottom:1.75rem}
+  .film dt{color:var(--muted)}
+  .watch{display:inline-flex;align-items:center;gap:.6rem;font-size:.92rem;padding:.65rem 1.1rem;border:1px solid var(--line);border-radius:999px;transition:background .25s,color .25s}
+  .watch svg{width:.65rem;height:.65rem}
+  .watch:hover{background:var(--text);color:var(--bg)}
+
+  .gallery{min-width:0}
+  .stage{position:relative}
+  .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;outline:none}
+  .track::-webkit-scrollbar{display:none}
+  .track:focus-visible{outline:1px solid var(--text);outline-offset:3px}
+  .slide{all:unset;flex:0 0 100%;scroll-snap-align:start;aspect-ratio:16/9;cursor:zoom-in;background:var(--frame)}
+  .nav{all:unset;position:absolute;top:50%;transform:translateY(-50%);width:2.75rem;height:2.75rem;display:grid;place-items:center;border-radius:50%;background:rgba(35,35,35,.55);color:var(--text);cursor:pointer;opacity:0;transition:opacity .25s}
+  .nav svg{width:1rem;height:1rem}
+  .nav.prev{left:.75rem}.nav.next{right:.75rem}
+  .stage:hover .nav:not(:disabled),.nav:focus-visible{opacity:1}
+  .nav:disabled{opacity:0!important;pointer-events:none}
+  .gal-foot{display:flex;align-items:center;gap:1.25rem;margin-top:.75rem}
+  .thumbs{position:relative;display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+  .thumbs::-webkit-scrollbar{display:none}
+  .thumbs button{all:unset;flex:0 0 4.5rem;aspect-ratio:16/9;cursor:pointer;opacity:.4;transition:opacity .25s;background:var(--frame)}
+  .thumbs button:hover{opacity:.75}
+  .thumbs button.on{opacity:1}
+  .thumbs button:focus-visible{outline:1px solid var(--text);outline-offset:2px}
+  .gal-foot .count{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .gal-foot .count b{color:var(--text);font-weight:400}
+
+  .more,.contact{scroll-margin-top:3rem;max-width:80rem;margin:0 auto;padding:clamp(3.5rem,8vw,6rem) var(--gutter);border-top:1px solid var(--line)}
+  .more ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:2.5rem 1.5rem}
+  .more li a{display:block}
+  .more .thumb{aspect-ratio:16/9;overflow:hidden;background:var(--frame);margin-bottom:.9rem}
+  .more .thumb img{transition:opacity .4s}
+  .more li a:hover img{opacity:.85}
+  .more strong{display:block;font-weight:400;font-variation-settings:"wdth" 80;font-size:1.25rem;line-height:1.3}
+  .more span{color:var(--muted);font-size:.9rem}
+  .more .thumb{position:relative}
+  .more .badge{position:absolute;right:.6rem;bottom:.6rem;font-size:.75rem;padding:.2rem .55rem;border-radius:999px;background:rgba(35,35,35,.75);color:var(--text)}
+  .episodes{list-style:none;margin-top:.75rem;border-top:1px solid var(--line)}
+  .episodes li a{display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
+  .episodes li a::after{content:"Ver";color:var(--muted)}
+  .episodes li a:hover::after{color:var(--text)}
+
+  .showreel{max-width:80rem;margin:0 auto;padding:clamp(3.5rem,8vw,6rem) var(--gutter);border-top:1px solid var(--line)}
+  .reel-frame{display:block;position:relative;aspect-ratio:2.39/1;overflow:hidden;background:var(--frame)}
+  .reel-frame img{transition:transform 1.2s cubic-bezier(.2,.6,.2,1)}
+  .reel-frame:hover img{transform:scale(1.02)}
+  .reel-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:.7rem;padding:.85rem 1.4rem;border-radius:999px;background:rgba(236,235,232,.92);color:var(--bg);font-size:.95rem}
+  .reel-play svg{width:.7rem;height:.7rem}
+  .contact p{color:var(--muted);max-width:48ch;margin-bottom:1.75rem}
+  .contact .links{display:flex;flex-wrap:wrap;gap:1rem 3rem;font-variation-settings:"wdth" 80;font-size:clamp(1.3rem,2.6vw,1.9rem);font-weight:300}
+  .contact .links a{border-bottom:1px solid var(--line)}
+  .contact .links a:hover{border-color:var(--text)}
+  .contact footer{margin-top:5rem;color:var(--muted);font-size:.8rem}
+
+  .viewer{position:fixed;inset:0;z-index:50;background:rgba(20,20,20,.97);display:none;align-items:center;justify-content:center;padding:4rem var(--gutter)}
+  .viewer.on{display:flex}
+  .viewer img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;background:none}
+  .viewer button{all:unset;cursor:pointer;position:absolute;color:var(--muted);font-size:.9rem;padding:.75rem 1rem}
+  .viewer button:hover{color:var(--text)}
+  .viewer .x{top:.75rem;right:var(--gutter)}
+  .viewer .prev{left:var(--gutter);bottom:1rem}
+  .viewer .next{right:var(--gutter);bottom:1rem}
+  .viewer .count{position:absolute;bottom:1.75rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.8rem;font-variant-numeric:tabular-nums}
+
+  @media (max-width:760px){
+    /* nav-mobile */
+    .top{flex-wrap:wrap;row-gap:.6rem;padding-top:1rem;padding-bottom:.8rem;background:rgba(35,35,35,.92)}
+    .top nav{width:100%;justify-content:space-between;gap:.5rem;font-size:.85rem}
+    .reel-frame{aspect-ratio:16/9}
+    .open{min-height:auto;padding-top:5rem}
+    .open .still{aspect-ratio:16/10}
+    .open .caption{flex-direction:column}
+    .open .credit{text-align:left}
+    .index li a{grid-template-columns:1fr auto}
+    .index .f{grid-column:1 / span 2;margin-top:-.6rem}
+    .film{grid-template-columns:1fr}
+    .film-info{position:static}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="name" href="#inicio">Nicolás Royo</a>
+  <nav aria-label="Secciones">
+    <a href="#ficcion">Ficción</a>
+    <a href="#videoclips">Videoclips</a>
+    <a href="#moda">Moda</a>
+    <a href="#showreel">Showreel</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<main>
+  <section class="open" id="inicio" aria-label="Presentación">
+    <div class="still">
+      <img src="https://static.wixstatic.com/media/b9126c_264603ec9f6f43f5b30d0512ede16d10~mv2.jpg/v1/fit/w_2400,h_2400,q_85/b9126c_264603ec9f6f43f5b30d0512ede16d10~mv2.jpg" alt="Fotograma de Entre los días">
+    </div>
+    <div class="caption">
+      <h1>Nicolás Royo<span>Director de fotografía</span></h1>
+      <p class="credit">Entre los días, 2025</p>
+    </div>
+  </section>
+
+  <section class="index" aria-label="Índice">
+    <h2 class="section-title">Ficción</h2>
+    <ol id="index-list"></ol>
+  </section>
+
+  <section class="films" id="ficcion" aria-label="Películas"></section>
+
+  <section class="more" id="videoclips">
+    <h2 class="section-title">Videoclips</h2>
+    <ul>
+      <li><a href="#"><div class="thumb"><img loading="lazy" src="img/clip.jpg" alt=""></div><strong>Título del videoclip</strong><span>Artista</span></a></li>
+      <li><a href="#"><div class="thumb"><img loading="lazy" src="img/clip2.jpg" alt=""></div><strong>Título del videoclip</strong><span>Artista</span></a></li>
+    </ul>
+  </section>
+
+  <section class="more" id="moda">
+    <h2 class="section-title">Moda</h2>
+    <ul>
+      <li><a href="https://youtu.be/gAomQ_X00tw"><div class="thumb"><img loading="lazy" src="https://img.youtube.com/vi/gAomQ_X00tw/maxresdefault.jpg" alt=""></div><strong>Memento</strong><span>Mercedes-Benz Fashion Week Madrid 2026</span></a></li>
+      <li><a href="#"><div class="thumb"><img loading="lazy" src="img/fashion.jpg" alt=""></div><strong>Título del fashion film</strong><span>Marca</span></a></li>
+    </ul>
+  </section>
+
+  <section class="more" id="videomagazine">
+    <h2 class="section-title">Videomagazine</h2>
+    <ul>
+      <li><a href="https://epistrophemagazine.com/card-07/"><div class="thumb"><img loading="lazy" src="img/c07.jpg" alt=""><span class="badge">2 vídeos</span></div><strong>Epistrophe Magazine</strong><span>Videomagazine</span></a>
+        <ol class="episodes">
+          <li><a href="https://epistrophemagazine.com/card-07/">Card 07</a></li>
+          <li><a href="https://epistrophemagazine.com/card-08/">Card 08</a></li>
+        </ol></li>
+    </ul>
+  </section>
+
+  <section class="showreel" id="showreel">
+    <h2 class="section-title">Showreel</h2>
+    <a class="reel-frame" href="#" aria-label="Ver el showreel">
+      <img loading="lazy" src="img/reelbig.jpg" alt="">
+      <span class="reel-play"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z" fill="currentColor"/></svg>Ver el showreel</span>
+    </a>
+  </section>
+
+  <section class="contact" id="contacto">
+    <h2 class="section-title">Contacto</h2>
+    <p>Disponible para cortometrajes, largometrajes, publicidad y videoclips.</p>
+    <div class="links">
+      <a href="mailto:hola@nicolasroyo.com">hola@nicolasroyo.com</a>
+      <a href="https://www.instagram.com/nroyo32/">Instagram</a>
+    </div>
+    <footer>© 2026 Nicolás Royo</footer>
+  </section>
+</main>
+
+<div class="viewer" role="dialog" aria-modal="true" aria-label="Fotograma ampliado">
+  <button class="x" aria-label="Cerrar">Cerrar</button>
+  <img alt="">
+  <button class="prev">Anterior</button>
+  <span class="count"></span>
+  <button class="next">Siguiente</button>
+</div>
+
+<script>
+/* Para añadir un proyecto: copia un bloque, cambia los datos y pon las rutas de sus fotogramas en "stills". */
+const wix = id => `https://static.wixstatic.com/media/b9126c_${id}~mv2.jpg/v1/fit/w_2000,h_2000,q_85/b9126c_${id}~mv2.jpg`;
+const FILMS = [
+  { title:"Entre los días", year:"2025", format:"Cortometraje", fest:"Selección oficial, Festival Internacional de Torino",
+    video:"https://www.youtube.com/watch?v=pDBc2sgED68",
+    stills:["264603ec9f6f43f5b30d0512ede16d10","55b5142e9d754080b8105c9ee838e731","c83085f684b147d1a3bf1c7aa2d49128"].map(wix) },
+  { title:"Klittra", year:"2024", format:"Cortometraje", fest:"Selección oficial, Festival U22",
+    video:"https://www.youtube.com/watch?v=zq4tEGsTze0",
+    stills:["f6adf755606d47dcbd0d6b9420aa679e","a3ab19f396804d28888f4e590008017c","4e92ac2ae0aa47c484273162da2a11bb"].map(wix) },
+  { title:"Bicho", year:"", format:"Cortometraje",
+    video:"https://www.youtube.com/watch?v=oPpA4xBXJxA",
+    stills:["b89f3949c6ac4ab293a26f511d80f097","b2c56d7b5ccd4c08996b3bca289e00f4","b8a788715b1c4013981d25db27e02ba0"].map(wix) },
+  { title:"Domingo", year:"", format:"Cortometraje",
+    video:"https://www.youtube.com/watch?v=M7VzkNsG9gs",
+    stills:["ddc0c638789d4efbae7e80953895f36f","97e0e4f44a8b4885ba9310a37831cc38","3684c13d34cb479ab30888bca03cb690"].map(wix) }
+];
+const play = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1 0l9 5-9 5z" fill="currentColor"/></svg>';
+const arrowL = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>';
+const arrowR = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>';
+const pad = n => String(n).padStart(2,'0');
+const root = document.getElementById('ficcion');
+
+FILMS.forEach((f, fi) => {
+  const slug = 'film-' + (fi+1);
+  const n = f.stills.length;
+  const art = document.createElement('article');
+  art.className = 'film'; art.id = slug;
+  art.innerHTML = `
+    <div class="film-info">
+      <h2>${f.title}</h2>
+      <dl>
+        ${f.year ? `<dt>Año</dt><dd>${f.year}</dd>` : ''}
+        <dt>Formato</dt><dd>${f.format}</dd>
+        <dt>Cargo</dt><dd>Dirección de fotografía</dd>
+        ${f.fest ? `<dt>Festival</dt><dd>${f.fest}</dd>` : ''}
+      </dl>
+      <a class="watch" href="${f.video}">${play}Ver la película</a>
+    </div>
+    <div class="gallery">
+      <div class="stage">
+        <div class="track" tabindex="0" aria-label="Fotogramas de ${f.title}">
+          ${f.stills.map((src,i)=>`<button class="slide" data-i="${i}" aria-label="Ampliar fotograma ${i+1} de ${f.title}"><img ${i>1?'loading="lazy"':''} src="${src}" alt="${f.title}, fotograma ${i+1}"></button>`).join('')}
+        </div>
+        <button class="nav prev" aria-label="Fotograma anterior">${arrowL}</button>
+        <button class="nav next" aria-label="Fotograma siguiente">${arrowR}</button>
+      </div>
+      <div class="gal-foot">
+        <div class="thumbs">${f.stills.map((src,i)=>`<button data-i="${i}" aria-label="Ir al fotograma ${i+1}"><img loading="lazy" src="${src}" alt=""></button>`).join('')}</div>
+        <span class="count"><b>${pad(1)}</b> / ${pad(n)}</span>
+      </div>
+    </div>`;
+  root.appendChild(art);
+
+  const li = document.createElement('li');
+  li.innerHTML = `<a href="#${slug}"><span class="t">${f.title}</span><span class="y">${f.year || ''}</span><span class="f">${f.fest || ''}</span></a>`;
+  document.getElementById('index-list').appendChild(li);
+
+  const track = art.querySelector('.track'), thumbs = [...art.querySelectorAll('.thumbs button')], count = art.querySelector('.count b');
+  let cur = 0;
+  const go = i => { i = Math.max(0, Math.min(n-1, i)); track.scrollTo({left: i * track.clientWidth, behavior: 'smooth'}); };
+  const mark = () => {
+    const i = Math.round(track.scrollLeft / track.clientWidth);
+    if (i === cur && thumbs[i].classList.contains('on')) return;
+    cur = i; count.textContent = pad(i+1);
+    thumbs.forEach((t,k)=>t.classList.toggle('on', k===i));
+    const tb = thumbs[i], box = tb.parentElement; if (tb.offsetLeft < box.scrollLeft || tb.offsetLeft + tb.offsetWidth > box.scrollLeft + box.clientWidth) box.scrollTo({left: tb.offsetLeft - box.clientWidth/2 + tb.offsetWidth/2, behavior:'smooth'});
+    art.querySelector('.prev').disabled = i===0; art.querySelector('.next').disabled = i===n-1;
+  };
+  track.addEventListener('scroll', () => requestAnimationFrame(mark), {passive:true});
+  art.querySelector('.prev').onclick = () => go(cur-1);
+  art.querySelector('.next').onclick = () => go(cur+1);
+  thumbs.forEach(t => t.onclick = () => go(+t.dataset.i));
+  track.addEventListener('keydown', e => { if (e.key==='ArrowRight'){e.preventDefault();go(cur+1)} if (e.key==='ArrowLeft'){e.preventDefault();go(cur-1)} });
+  art.querySelectorAll('.slide').forEach(s => s.onclick = () => openViewer(f, +s.dataset.i, go));
+  mark();
+});
+
+/* Visor a pantalla completa, dentro del proyecto */
+const v = document.querySelector('.viewer'), vi = v.querySelector('img'), vc = v.querySelector('.count');
+let vf = null, vcur = 0, last = null, sync = null;
+function show(i){ vcur = (i + vf.stills.length) % vf.stills.length; vi.src = vf.stills[vcur]; vi.alt = `${vf.title}, fotograma ${vcur+1}`; vc.textContent = `${vf.title}  ${vcur+1} / ${vf.stills.length}`; }
+function openViewer(f, i, cb){ vf = f; sync = cb; last = document.activeElement; show(i); v.classList.add('on'); document.body.style.overflow='hidden'; v.querySelector('.x').focus(); }
+function close(){ v.classList.remove('on'); document.body.style.overflow=''; sync && sync(vcur); last && last.focus(); }
+v.querySelector('.x').onclick = close;
+v.querySelector('.prev').onclick = () => show(vcur-1);
+v.querySelector('.next').onclick = () => show(vcur+1);
+v.addEventListener('click', e => { if (e.target === v) close(); });
+let tx = null;
+v.addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+v.addEventListener('touchend', e => { if (tx===null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) show(vcur + (dx<0?1:-1)); tx = null; });
+document.addEventListener('keydown', e => {
+  if (!v.classList.contains('on')) return;
+  if (e.key === 'Escape') close();
+  if (e.key === 'ArrowRight') show(vcur+1);
+  if (e.key === 'ArrowLeft') show(vcur-1);
+});
+const bar=document.querySelector('.top');
+addEventListener('scroll',()=>bar.classList.toggle('solid',scrollY>40),{passive:true});
+</script>
+</body>
+</html>
