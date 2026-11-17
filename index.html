@@ -114,6 +114,35 @@
   .count b{color:var(--ink);font-weight:400}
   .caption{font-size:.72rem;color:var(--soft);margin-top:.6rem;text-align:right}
 
+  a.slide.linkslide{display:block;position:relative;aspect-ratio:16/9;cursor:pointer;background:var(--frame);overflow:hidden}
+  .linkslide img{transition:transform .9s cubic-bezier(.2,.6,.2,1)}
+  .linkslide:hover img{transform:scale(1.02)}
+  .playtag{position:absolute;left:.75rem;bottom:.75rem;display:inline-flex;align-items:center;gap:.5rem;background:var(--paper);padding:.35rem .75rem;font-size:.72rem}
+  .playtag svg{width:.5rem;height:.5rem}
+
+  /* Pasar página: la hoja gira sobre el lomo */
+  .fliplayer{position:fixed;inset:0;z-index:15;pointer-events:none;perspective:2400px}
+  .fliplayer .half{position:absolute;top:0;bottom:0;width:50%;background:var(--paper);overflow:hidden}
+  .fliplayer .half.left{left:0}.fliplayer .half.right{left:50%}
+  .leaf{position:absolute;top:0;bottom:0;width:50%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.45,.05,.2,1)}
+  .leaf.right{left:50%;transform-origin:left center}
+  .leaf.left{left:0;transform-origin:right center}
+  .fliplayer.go .leaf.right{transform:rotateY(-180deg)}
+  .fliplayer.go .leaf.left{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--paper);overflow:hidden}
+  .face.back{transform:rotateY(180deg)}
+  .face::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0}
+  .leaf.right .face.front::after,.leaf.left .face.back::after{background:linear-gradient(to right,rgba(60,50,40,.28),rgba(60,50,40,.05) 40%,transparent)}
+  .leaf.right .face.back::after,.leaf.left .face.front::after{background:linear-gradient(to left,rgba(60,50,40,.28),rgba(60,50,40,.05) 40%,transparent)}
+  .fliplayer.go .face::after{animation:shade .9s ease}
+  @keyframes shade{0%{opacity:0}50%{opacity:1}100%{opacity:0}}
+  .fliplayer .pg{position:absolute;inset:0;height:100%}
+  .fliplayer .cast{position:absolute;top:0;bottom:0;width:50%;pointer-events:none;opacity:0;animation:cast .9s ease}
+  .fliplayer .cast.onright{left:50%;background:linear-gradient(to right,rgba(60,50,40,.22),transparent 55%)}
+  .fliplayer .cast.onleft{left:0;background:linear-gradient(to left,rgba(60,50,40,.22),transparent 55%)}
+  @keyframes cast{0%{opacity:0}60%{opacity:1}100%{opacity:0}}
+  body.flipping .spread.on{animation:none}
+
   /* Contacto */
   .contact-list{list-style:none;font-weight:700;font-size:clamp(1.6rem,3vw,2.6rem);line-height:1.1;letter-spacing:-.02em}
   .contact-list a:hover{opacity:.6}
@@ -221,6 +250,7 @@ const BOOK = [
     { slug:"memento", title:"Memento", kind:"Desfile", client:"Mercedes-Benz Fashion Week Madrid", year:"2026", desc:"",
       video:"https://youtu.be/gAomQ_X00tw", watch:"Ver el vídeo", stills:[yt("gAomQ_X00tw")] },
     { slug:"epistrophe", title:"Epistrophe Magazine", kind:"Videomagazine", client:"Epistrophe Magazine", year:"", desc:"",
+      credits:[["Rodado en","16 mm"]],
       episodes:[["Card 07, Inner Words","https://epistrophemagazine.com/card-07/"],["Card 08, A Flor e a Náusea","https://epistrophemagazine.com/card-08/"]],
       stills:["https://epistrophemagazine.com/wp-content/uploads/2024/06/georgia.mp4#t=24","https://epistrophemagazine.com/wp-content/uploads/2024/06/rebecca-corrigido.mp4#t=20"] }
   ]}
@@ -265,6 +295,9 @@ function facts(it, sec){
 }
 function galleryHTML(it){
   const n = it.stills.length;
+  if (n === 1 && it.video && it.video !== '#') {
+    return `<div class="gallery"><a class="slide linkslide" href="${it.video}" aria-label="${esc(it.watch || 'Ver el vídeo')}: ${esc(it.title)}">${media(it.stills[0], esc(it.title), true)}<span class="playtag">${play}${esc(it.watch || 'Ver el vídeo')}</span></a></div>`;
+  }
   return `<div class="gallery">
     <div class="stage">
       <div class="track" tabindex="0" aria-label="Fotogramas de ${esc(it.title)}">
@@ -331,6 +364,7 @@ SPREADS.forEach(sp => {
 document.querySelectorAll('.spread.project').forEach(el => {
   const it = SPREADS.find(s => 'p-' + s.id === el.id).item;
   const n = it.stills.length, track = el.querySelector('.track');
+  if (!track) return;
   const thumbs = [...el.querySelectorAll('.thumbs button')], count = el.querySelector('.count b');
   let cur = -1;
   const go = i => track.scrollTo({left: Math.max(0, Math.min(n-1, i)) * track.clientWidth, behavior:'smooth'});
@@ -349,7 +383,7 @@ document.querySelectorAll('.spread.project').forEach(el => {
   el.querySelector('.nav.next')?.addEventListener('click', () => go(cur+1));
   thumbs.forEach(t => t.onclick = () => go(+t.dataset.i));
   track.addEventListener('keydown', e => { if (e.key==='ArrowRight'){e.preventDefault();e.stopPropagation();go(cur+1)} if (e.key==='ArrowLeft'){e.preventDefault();e.stopPropagation();go(cur-1)} });
-  el.querySelectorAll('.slide').forEach(s => s.onclick = () => { if (!isVid(it.stills[+s.dataset.i])) openViewer(it, +s.dataset.i, go); });
+  el.querySelectorAll('button.slide').forEach(s => s.onclick = () => { if (!isVid(it.stills[+s.dataset.i])) openViewer(it, +s.dataset.i, go); });
   el._mark = () => { cur = -1; mark(); };
 });
 
@@ -367,6 +401,26 @@ function fitBig(el){
   }
 }
 
+/* Pasar páginas, con la hoja girando como en una revista */
+const canFlip = () => innerWidth > 800 && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+function clonePg(el){ const c = el.cloneNode(true); c.querySelectorAll('[id]').forEach(n => n.removeAttribute('id')); c.removeAttribute('id'); c.querySelectorAll('.track').forEach(t => t.removeAttribute('tabindex')); return c; }
+function flip(oldEl, newEl, dir){
+  document.querySelectorAll('.fliplayer').forEach(n => n.remove());
+  const layer = document.createElement('div'); layer.className = 'fliplayer'; layer.setAttribute('aria-hidden','true');
+  const fwd = dir > 0;
+  const stay = document.createElement('div'); stay.className = 'half ' + (fwd ? 'left' : 'right');
+  stay.appendChild(clonePg(oldEl.querySelector(fwd ? '.pg.l' : '.pg.r')));
+  const leaf = document.createElement('div'); leaf.className = 'leaf ' + (fwd ? 'right' : 'left');
+  const front = document.createElement('div'); front.className = 'face front'; front.appendChild(clonePg(oldEl.querySelector(fwd ? '.pg.r' : '.pg.l')));
+  const back = document.createElement('div'); back.className = 'face back'; back.appendChild(clonePg(newEl.querySelector(fwd ? '.pg.l' : '.pg.r')));
+  leaf.append(front, back);
+  const cast = document.createElement('div'); cast.className = 'cast ' + (fwd ? 'onright' : 'onleft');
+  layer.append(stay, cast, leaf);
+  document.body.appendChild(layer); document.body.classList.add('flipping');
+  layer.getBoundingClientRect();
+  requestAnimationFrame(() => layer.classList.add('go'));
+  setTimeout(() => { layer.remove(); document.body.classList.remove('flipping'); }, 950);
+}
 /* Pasar páginas */
 let at = -1;
 const prevB = document.getElementById('prev'), nextB = document.getElementById('next');
@@ -375,8 +429,11 @@ function route(){
   let i = SPREADS.findIndex(s => s.id === (location.hash.slice(1) || 'inicio'));
   if (i < 0) i = 0;
   if (i === at) return;
-  at = i;
+  const prevAt = at === -1 ? null : SPREADS[at];
   const sp = SPREADS[i];
+  const oldEl = prevAt && document.getElementById('p-' + prevAt.id);
+  const dir = prevAt ? Math.sign(i - SPREADS.indexOf(prevAt)) : 0;
+  at = i;
   document.querySelectorAll('.spread').forEach(s => s.classList.toggle('on', s.id === 'p-' + sp.id));
   const on = document.getElementById('p-' + sp.id);
   document.body.classList.toggle('at-index', sp.type === 'index');
@@ -387,6 +444,7 @@ function route(){
   document.title = sp.type === 'project' ? `${sp.item.title}, Nicolás Royo` : 'Nicolás Royo, Cinematographer';
   on.querySelectorAll('.vbig').forEach(fitBig);
   on._mark && on._mark();
+  if (oldEl && dir && canFlip()) flip(oldEl, on, dir);
   scrollTo(0,0);
 }
 const turn = d => { const i = Math.max(0, Math.min(SPREADS.length-1, at + d)); location.hash = SPREADS[i].id; };
