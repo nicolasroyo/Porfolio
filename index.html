@@ -227,8 +227,8 @@
 
 <main id="book"></main>
 
-<div class="folio l"><button id="prev" aria-label="Página anterior">Anterior</button><span class="num" id="num-l"></span></div>
-<div class="folio r"><button id="next" aria-label="Página siguiente">Siguiente</button><span class="num" id="num-r"></span></div>
+<div class="folio l"><button id="prev" aria-label="Página anterior">Anterior</button></div>
+<div class="folio r"><button id="next" aria-label="Página siguiente">Siguiente</button></div>
 
 <div class="viewer" role="dialog" aria-modal="true" aria-label="Fotograma ampliado">
   <button class="x">Cerrar</button>
@@ -352,8 +352,8 @@ SPREADS.forEach(sp => {
   el.id = 'p-' + sp.id;
   if (sp.type === 'index') {
     const toc = BOOK.map(sec => `
-      <li class="sec"><a href="#${sec.id}"><span>${esc(sec.title)}</span><span class="n">${pageOf(sec.id)}</span></a></li>`).join('')
-      + `<li class="sec"><a href="#contacto"><span>Contacto</span><span class="n">${pageOf('contacto')}</span></a></li>`;
+      <li class="sec"><a href="#${sec.id}"><span>${esc(sec.title)}</span></a></li>`).join('')
+      + `<li class="sec"><a href="#contacto"><span>Contacto</span></a></li>`;
     el.innerHTML = `
       <div class="pg l"><nav class="toc" aria-label="Índice"><ol>${toc}</ol></nav></div>
       <div class="pg r">${vbig(['NICOLÁS','ROYO'],'home-name')}
@@ -364,7 +364,7 @@ SPREADS.forEach(sp => {
     el.innerHTML = `
       <div class="pg l"><nav class="sheet" style="--cols:${cols};--rows:${rows}" aria-label="${esc(sp.sec.title)}">
         <span class="label">${esc(sp.sec.title)}</span>
-        <ol>${sp.sec.items.map(it => `<li><a href="#${it.slug}"><div class="sframe">${media(it.stills[0], '', true)}</div><span class="cap"><span>${esc(it.title)}</span><span class="n">${pageOf(it.slug)}</span></span></a></li>`).join('')}</ol>
+        <ol>${sp.sec.items.map(it => `<li><a href="#${it.slug}"><div class="sframe">${media(it.stills[0], '', true)}</div><span class="cap"><span>${esc(it.title)}</span></span></a></li>`).join('')}</ol>
       </nav></div>
       <div class="pg r">${vbig(sp.sec.big,'sec-big')}</div>`;
   }
@@ -464,7 +464,7 @@ function flip(oldEl, newEl, dir){
 /* Pasar páginas */
 let at = -1;
 const prevB = document.getElementById('prev'), nextB = document.getElementById('next');
-const numL = document.getElementById('num-l'), numR = document.getElementById('num-r'), runSec = document.getElementById('run-sec');
+const runSec = document.getElementById('run-sec');
 function route(){
   let i = SPREADS.findIndex(s => s.id === (location.hash.slice(1) || 'inicio'));
   if (i < 0) i = 0;
@@ -477,7 +477,6 @@ function route(){
   document.querySelectorAll('.spread').forEach(s => s.classList.toggle('on', s.id === 'p-' + sp.id));
   const on = document.getElementById('p-' + sp.id);
   document.body.classList.toggle('at-index', sp.type === 'index');
-  numL.textContent = i * 2; numR.textContent = i * 2 + 1;
   prevB.disabled = i === 0; nextB.disabled = i === SPREADS.length - 1;
   runSec.textContent = sp.sec ? sp.sec.title : (sp.type === 'reel' ? 'Showreel' : sp.type === 'contact' ? 'Contacto' : 'Índice');
   runSec.href = sp.sec ? '#' + sp.sec.id : '#inicio';
