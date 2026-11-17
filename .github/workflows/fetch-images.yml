@@ -1,0 +1,22 @@
+name: Guardar fotogramas en el repositorio
+on:
+  push:
+    paths: ["images.txt", "scripts/fetch-images.sh", ".github/workflows/fetch-images.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Descargar fotogramas
+        run: bash scripts/fetch-images.sh
+      - name: Guardar en el repositorio
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add img
+          git diff --cached --quiet || (git commit -m "Fotogramas guardados en el repositorio" && git push)
