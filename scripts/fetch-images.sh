@@ -15,7 +15,7 @@ while read -r path url; do
   fi
   if ! curl -fsSL --retry 3 "$url" -o "$tmp"; then echo "FALLO $path"; fail=1; rm -f "$tmp"; continue; fi
   if file "$tmp" | grep -qi 'png\|webp'; then
-    ffmpeg -loglevel error -y -i "$tmp" -q:v 2 "$path" || { echo "FALLO $path"; fail=1; }
+    ffmpeg -loglevel error -y -i "$tmp" -pix_fmt yuvj420p -q:v 2 "$path" || { echo "FALLO $path"; fail=1; }
   else
     mv "$tmp" "$path"
   fi
