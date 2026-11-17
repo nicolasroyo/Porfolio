@@ -52,5 +52,5 @@ img/menchen-tomas/01.jpg https://i.vimeocdn.com/video/2062103766-e414323268d7260
 img/menchen-tomas/02.jpg https://i.vimeocdn.com/video/2062134655-8817a60dfd3ec1f141e32b35548fb7f188ca013c1e70c4cd1f4da9010e9e516a-d_1280
 img/menchen-tomas/03.jpg https://i.vimeocdn.com/video/2133973929-b8e238ceeb32f3edf357f20d16c90dd1544674f278569902ab982263183b61db-d_1280
 img/epistrophe/01.jpg https://epistrophemagazine.com/wp-content/uploads/2024/06/georgia.mp4#t=24
-img/epistrophe/02.jpg https://epistrophemagazine.com/wp-content/uploads/2024/06/rebecca-corrigido.mp4#t=20
-img/portada.jpg https://static.wixstatic.com/media/b9126c_5da8f3a62cc3495c8e622a40956f10fe~mv2.png
+img/epistrophe/02.jpg https://epistrophemagazine.com/wp-content/uploads/2024/06/rebecca-corrigido.mp4#t=8
+img/portada.jpg https://static.wixstatic.com/media/b9126c_5da8f3a62cc3495c8e622a40956f10fe~mv2.png/v1/fill/w_2400,h_1272,al_c,q_90/portada.png
