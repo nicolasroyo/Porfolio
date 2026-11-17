@@ -395,7 +395,6 @@ SPREADS.forEach(sp => {
   if (sp.type === 'contact') {
     el.innerHTML = `
       <div class="pg l"><div class="proj-text"><p class="kicker">Contacto</p>
-        <p class="desc">${esc(CONTACT.bio)}</p>
         <ul class="contact-list"><li><a href="mailto:${CONTACT.email}">${esc(CONTACT.email)}</a></li><li><a href="${CONTACT.instagram}">Instagram</a></li></ul></div></div>
       <div class="pg r">${vbig(['CONTACTO'],'sec-big')}</div>`;
   }
