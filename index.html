@@ -329,7 +329,7 @@ SPREADS.forEach(sp => {
     el.innerHTML = `
       <div class="pg l"><span class="label idx-title">Índice</span><nav class="toc" aria-label="Índice"><ol>${toc}</ol></nav></div>
       <div class="pg r">${vbig(['NICOLÁS','ROYO'],'home-name')}
-        <p class="colophon" id="colophon">Cinematographer</p></div>`;
+        <p class="colophon" id="colophon">Cinematographer<br><a href="#contacto">Contacto</a><br><a href="${CONTACT.instagram}">Instagram</a></p></div>`;
   }
   if (sp.type === 'opener') {
     el.innerHTML = `
