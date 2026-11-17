@@ -30,12 +30,12 @@
   button{font:inherit;color:inherit}
 
   /* El libro: cada vista es un pliego de dos páginas */
-  .spread{display:none;position:relative;height:100svh;grid-template-columns:1fr 1fr}
+  .spread{display:none;position:relative;height:100svh;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .spread.on{display:grid;animation:turn .45s ease both}
   @keyframes turn{from{opacity:0}to{opacity:1}}
   .spread::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:70px;transform:translateX(-50%);pointer-events:none;z-index:1;
     background:linear-gradient(90deg,transparent,rgba(90,80,70,.07) 45%,rgba(255,255,255,.25) 52%,rgba(90,80,70,.05) 58%,transparent)}
-  .pg{position:relative;padding:var(--m);min-height:0;display:flex;flex-direction:column}
+  .pg{position:relative;padding:var(--m);min-height:0;min-width:0;display:flex;flex-direction:column}
   .pg.r{align-items:flex-end}
 
   /* Cabecera corrida y folios, como en un libro */
@@ -96,8 +96,8 @@
   .episodes a::after{content:"Ver";color:var(--soft)}
   .episodes a:hover{opacity:.6}
 
-  .gallery{margin:auto 0;width:100%;max-width:56rem;padding-right:0}
-  .pg.r .gallery{padding-left:2vw}
+  .gallery{margin:auto 0;width:100%;min-width:0;max-width:min(56rem,calc((100svh - 2 * var(--m) - 8rem) * 16 / 9));padding-right:0}
+  .pg.r .gallery{margin-left:2vw;width:calc(100% - 2vw)}
   .stage{position:relative}
   .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;outline:none}
   .track::-webkit-scrollbar{display:none}
