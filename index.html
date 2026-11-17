@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nicolás Royo, Cinematographer</title>
 <meta name="description" content="Nicolás Royo, director de fotografía. Ficción, videoclips, moda y publicidad.">
+<meta property="og:title" content="Nicolás Royo, Cinematographer">
+<meta property="og:description" content="Director de fotografía. Ficción, videoclips, moda y publicidad.">
+<meta property="og:image" content="https://nicolasroyo.netlify.app/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e6e3dd'/%3E%3Ctext x='32' y='47' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='42' fill='%232b2a28'%3ENR%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#e6e3dd">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..700&display=swap" rel="stylesheet">
@@ -221,48 +230,49 @@
 const wix = id => `https://static.wixstatic.com/media/b9126c_${id}~mv2.jpg/v1/fit/w_2000,h_2000,q_85/b9126c_${id}~mv2.jpg`;
 const yt = id => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 const DOP = "Dirección de fotografía";
+const local = (slug, n) => Array.from({length:n}, (_, i) => `img/${slug}/${String(i+1).padStart(2,"0")}.jpg`);
 
 const BOOK = [
   { id:"ficcion", title:"Ficción", big:["FICCIÓN"], items:[
     { slug:"entre-los-dias", title:"Entre los días", kind:"Cortometraje", year:"2025",
       fest:"Selección oficial, Festival Internacional de Torino 2025", desc:"",
       video:"https://www.youtube.com/watch?v=pDBc2sgED68", watch:"Ver la película",
-      stills:["264603ec9f6f43f5b30d0512ede16d10","55b5142e9d754080b8105c9ee838e731","dac43ab8b19241a7ba93319da6be5427","4537b9cb79634aa194286f7df695fe30","4619f19981b34a2caadcbecf9fa177f9","2ba92ea45ee14c9b88f29fed47567227","f74a8075b817403d817a76ac74c9121c","a9c9464a10074788a5948227edc283e9","1dff672def8749cb91a0049eb9ea9bfa","b37993d7e4d54526afa53e05a131d8a1","c83085f684b147d1a3bf1c7aa2d49128"].map(wix) },
+      stills:local("entre-los-dias", 11) },
     { slug:"klittra", title:"Klittra", kind:"Cortometraje", year:"2024",
       fest:"Selección oficial, Festival U22 2024", desc:"",
       video:"https://www.youtube.com/watch?v=zq4tEGsTze0", watch:"Ver la película",
-      stills:["f6adf755606d47dcbd0d6b9420aa679e","a3ab19f396804d28888f4e590008017c","fdb6a05aa61e4ef4b0846fb5a026fe93","fdec2a4cc46046ab8d9cb6906202c828","59216ef9bb3143a7a049d05a60e70f32","e83a90d5967746449cf96cc544d50571","29c5739d562741dd8b82cc4d8067ab64","7a2a444189574adeafc536247558f53b","4e92ac2ae0aa47c484273162da2a11bb"].map(wix) },
+      stills:local("klittra", 9) },
     { slug:"bicho", title:"Bicho", kind:"Cortometraje", year:"", desc:"",
       video:"https://www.youtube.com/watch?v=oPpA4xBXJxA", watch:"Ver la película",
-      stills:["b89f3949c6ac4ab293a26f511d80f097","b2c56d7b5ccd4c08996b3bca289e00f4","4cc2b3a5e6094ffc960c6acf27c0d486","29f0da9925e84330a236394413bb38fe","608985c3819b49efa43fa5c797d7d0a1","de350577a5794739bac4c1e08fb387f8","738c8d8846d0447eabcefdec2369f9c0","0e81ee6f6aa84c13825c9f92e2818af3","21fa44f014cf4fcbb73abaa7d5b61a4a","eb40143b502c4afdb8bdefd1ce8c57b6","197bfcfc48f94104b508614235a8f631","2b8543cd351845e7b57c8a340d2427c4","32b487182fb646cc9ed8662b16c190dc","3b30f039f78940a29eddb611db899216","b8a788715b1c4013981d25db27e02ba0"].map(wix) },
+      stills:local("bicho", 15) },
     { slug:"domingo", title:"Domingo", kind:"Cortometraje", year:"", desc:"",
       video:"https://www.youtube.com/watch?v=M7VzkNsG9gs", watch:"Ver la película",
-      stills:["ddc0c638789d4efbae7e80953895f36f","97e0e4f44a8b4885ba9310a37831cc38","a35455c674664645a60f5f84151e8aff","dbd2ea1b0f054add87294c30ebb88d24","69ac3ca69da246a7b8086ffa7cb26975","1aa32df3320f424dbaf930f1745278ee","3684c13d34cb479ab30888bca03cb690"].map(wix) }
+      stills:local("domingo", 7) }
   ]},
   { id:"videoclips", title:"Videoclips", big:["VIDEO","CLIPS"], items:[
     { slug:"el-centro-del-hueso", title:"El centro del hueso", kind:"Videoclip", artist:"Nico Miseria", year:"", desc:"",
-      video:"https://www.youtube.com/watch?v=TCVhfANW7e8", watch:"Ver el videoclip", stills:[yt("TCVhfANW7e8")] },
+      video:"https://www.youtube.com/watch?v=TCVhfANW7e8", watch:"Ver el videoclip", stills:local("el-centro-del-hueso", 1) },
     { slug:"exitoso", title:"Exitoso", kind:"Videoclip", artist:"Mir Nicolás ft. Nico Miseria", year:"", desc:"",
-      video:"https://www.youtube.com/watch?v=JMFK0kBjaHQ", watch:"Ver el videoclip", stills:[yt("JMFK0kBjaHQ")] },
+      video:"https://www.youtube.com/watch?v=JMFK0kBjaHQ", watch:"Ver el videoclip", stills:local("exitoso", 1) },
     { slug:"lo-nuestro-empezo", title:"Lo nuestro empezó", kind:"Videoclip", artist:"Nico Miseria", year:"", desc:"",
-      video:"https://www.youtube.com/watch?v=Z8lZpu_gwNE", watch:"Ver el videoclip", stills:[yt("Z8lZpu_gwNE")] },
+      video:"https://www.youtube.com/watch?v=Z8lZpu_gwNE", watch:"Ver el videoclip", stills:local("lo-nuestro-empezo", 1) },
     { slug:"zombis-y-momias", title:"Zombis & Momias", kind:"Videoclip", artist:"Escandaloso Xpósito & Ciclo con Guerrita", year:"", desc:"",
-      video:"https://www.youtube.com/watch?v=-SAJX23oFy4", watch:"Ver el videoclip", stills:[yt("-SAJX23oFy4")] },
+      video:"https://www.youtube.com/watch?v=-SAJX23oFy4", watch:"Ver el videoclip", stills:local("zombis-y-momias", 1) },
     { slug:"no-future", title:"No Future", kind:"Videoclip", artist:"NewAgeLov3r", year:"", desc:"",
-      video:"https://www.youtube.com/watch?v=u1o058ZQZ2s", watch:"Ver el videoclip", stills:[yt("u1o058ZQZ2s")] },
+      video:"https://www.youtube.com/watch?v=u1o058ZQZ2s", watch:"Ver el videoclip", stills:local("no-future", 1) },
     { slug:"dios-funciona", title:"Dios funciona", kind:"Videoclip", artist:"Nico Miseria", year:"", desc:"",
-      video:"https://www.youtube.com/watch?v=SFaIWI2O0_Y", watch:"Ver el videoclip", stills:[yt("SFaIWI2O0_Y")] }
+      video:"https://www.youtube.com/watch?v=SFaIWI2O0_Y", watch:"Ver el videoclip", stills:local("dios-funciona", 1) }
   ]},
   { id:"moda", title:"Moda y publicidad", big:["MODA"], items:[
     { slug:"memento", title:"Memento", kind:"Desfile", client:"Mercedes-Benz Fashion Week Madrid", year:"2026", desc:"",
-      video:"https://youtu.be/gAomQ_X00tw", watch:"Ver el vídeo", stills:[yt("gAomQ_X00tw")] },
+      video:"https://youtu.be/gAomQ_X00tw", watch:"Ver el vídeo", stills:local("memento", 1) },
     { slug:"menchen-tomas", title:"Winter in Three Acts", kind:"Campaña", client:"Menchen Tomás, FW25", year:"2025", desc:"",
       episodes:[["Act I","https://vimeo.com/1121115206"],["Act II","https://vimeo.com/1121156097"],["Act III","https://vimeo.com/1121152132"]],
-      stills:["https://i.vimeocdn.com/video/2062103766-e414323268d7260050196a622cf00063f3d01c3cff827d4ed995eae894268172-d_1280","https://i.vimeocdn.com/video/2062134655-8817a60dfd3ec1f141e32b35548fb7f188ca013c1e70c4cd1f4da9010e9e516a-d_1280","https://i.vimeocdn.com/video/2133973929-b8e238ceeb32f3edf357f20d16c90dd1544674f278569902ab982263183b61db-d_1280"] },
+      stills:local("menchen-tomas", 3) },
     { slug:"epistrophe", title:"Epistrophe Magazine", kind:"Videomagazine", client:"Epistrophe Magazine", year:"", desc:"",
       credits:[["Rodado en","16 mm"]],
       episodes:[["Card 07, Inner Words","https://epistrophemagazine.com/card-07/"],["Card 08, A Flor e a Náusea","https://epistrophemagazine.com/card-08/"]],
-      stills:["https://epistrophemagazine.com/wp-content/uploads/2024/06/georgia.mp4#t=24","https://epistrophemagazine.com/wp-content/uploads/2024/06/rebecca-corrigido.mp4#t=20"] }
+      stills:local("epistrophe", 2) }
   ]}
 ];
 const SHOWREEL = { video:"https://www.youtube.com/watch?v=ZmyGuZ3fE1w", still:yt("ZmyGuZ3fE1w") };
