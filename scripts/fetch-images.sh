@@ -26,4 +26,5 @@ done < images.txt
 if [[ -f img/portada.jpg && ! -f img/og.jpg ]]; then
   ffmpeg -loglevel error -y -i img/portada.jpg -vf "scale=1200:630:force_original_aspect_ratio=increase,crop=1200:630" -q:v 3 img/og.jpg && echo "ok img/og.jpg"
 fi
-exit $fail
+[[ $fail -ne 0 ]] && echo "Algunos fotogramas no se pudieron descargar (ver arriba)"
+exit 0
