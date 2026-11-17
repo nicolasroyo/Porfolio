@@ -91,6 +91,17 @@
   .opener-list .n{color:var(--soft);font-variant-numeric:tabular-nums}
   .sec-big{position:absolute;top:var(--m);bottom:var(--m);right:var(--m);font-size:20svh}
 
+  /* Apertura de sección: hoja de contactos con un frame por proyecto */
+  .sheet{margin:auto 0;width:100%;max-width:calc(((100svh - 2 * var(--m) - 7rem) / var(--rows) - 2.4rem) * 16 / 9 * var(--cols) + (var(--cols) - 1) * 1rem);padding:2.5rem 0 1.5rem}
+  .sheet .label{display:block;margin-bottom:1.1rem}
+  .sheet ol{list-style:none;display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:1.2rem 1rem}
+  .sheet a{display:block;transition:opacity .25s}
+  .sheet ol:hover a{opacity:.4}
+  .sheet ol a:hover{opacity:1}
+  .sframe{aspect-ratio:16/9;overflow:hidden;background:var(--frame)}
+  .cap{display:flex;justify-content:space-between;gap:.75rem;font-size:.72rem;margin-top:.4rem}
+  .cap .n{color:var(--soft);font-variant-numeric:tabular-nums}
+
   /* Pliego de proyecto: texto a la izquierda, fotogramas a la derecha */
   .proj-text{margin:auto 0;padding:3rem 0 3rem 9vw;max-width:34rem}
   .kicker{color:var(--soft);font-size:.72rem;margin-bottom:1rem}
@@ -196,6 +207,10 @@
     .at-index .pg.r{position:static}
     .opener .pg.r{order:-1}
     .opener-list{margin-top:1.5rem}
+    .sheet{max-width:none;padding:1rem 0 0;--cols:2!important}
+    .opener.spread.on{display:flex;flex-direction:column}
+    .opener .pg.r{order:-1;padding-bottom:0}
+    .sheet .label{display:none}
     .proj-text{padding:1rem 0 0;margin:0}
     .proj-text h2{font-size:clamp(2.2rem,11vw,3.2rem);margin-bottom:1.25rem}
     .gallery,.pg.r .gallery{margin:0;padding:0!important;width:100%}
@@ -345,9 +360,12 @@ SPREADS.forEach(sp => {
         <p class="colophon" id="colophon">Cinematographer<br><a href="#contacto">Contacto</a><br><a href="${CONTACT.instagram}">Instagram</a></p></div>`;
   }
   if (sp.type === 'opener') {
+    const n = sp.sec.items.length, cols = n <= 4 ? 2 : 3, rows = Math.ceil(n / cols);
     el.innerHTML = `
-      <div class="pg l"><div class="opener-list"><span class="label">${esc(sp.sec.title)}</span>
-        <ol>${sp.sec.items.map(it => `<li><a href="#${it.slug}"><span>${esc(it.title)}</span><span class="n">${pageOf(it.slug)}</span></a></li>`).join('')}</ol></div></div>
+      <div class="pg l"><nav class="sheet" style="--cols:${cols};--rows:${rows}" aria-label="${esc(sp.sec.title)}">
+        <span class="label">${esc(sp.sec.title)}</span>
+        <ol>${sp.sec.items.map(it => `<li><a href="#${it.slug}"><div class="sframe">${media(it.stills[0], '', true)}</div><span class="cap"><span>${esc(it.title)}</span><span class="n">${pageOf(it.slug)}</span></span></a></li>`).join('')}</ol>
+      </nav></div>
       <div class="pg r">${vbig(sp.sec.big,'sec-big')}</div>`;
   }
   if (sp.type === 'project') {
