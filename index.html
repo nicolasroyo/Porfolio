@@ -246,7 +246,7 @@ BOOK.forEach(sec => {
   SPREADS.push({ id:sec.id, type:"opener", sec });
   sec.items.forEach((item, k) => SPREADS.push({ id:item.slug, type:"project", sec, item, k }));
 });
-SPREADS.push({ id:"showreel", type:"reel" }, { id:"contacto", type:"contact" });
+SPREADS.push({ id:"contacto", type:"contact" });
 const pageOf = id => SPREADS.findIndex(s => s.id === id) * 2;
 
 const book = document.getElementById('book');
@@ -283,8 +283,7 @@ SPREADS.forEach(sp => {
   if (sp.type === 'index') {
     const toc = BOOK.map(sec => `
       <li class="sec"><a href="#${sec.id}"><span>${esc(sec.title)}</span><span class="n">${pageOf(sec.id)}</span></a></li>`).join('')
-      + `<li class="sec"><a href="#showreel"><span>Showreel</span><span class="n">${pageOf('showreel')}</span></a></li>
-         <li class="sec"><a href="#contacto"><span>Contacto</span><span class="n">${pageOf('contacto')}</span></a></li>`;
+      + `<li class="sec"><a href="#contacto"><span>Contacto</span><span class="n">${pageOf('contacto')}</span></a></li>`;
     el.innerHTML = `
       <div class="pg l"><span class="label idx-title">Índice</span><nav class="toc" aria-label="Índice"><ol>${toc}</ol></nav></div>
       <div class="pg r">${vbig(['NICOLÁS','ROYO'],'home-name')}
