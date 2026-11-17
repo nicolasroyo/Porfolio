@@ -327,7 +327,7 @@ SPREADS.forEach(sp => {
       <li class="sec"><a href="#${sec.id}"><span>${esc(sec.title)}</span><span class="n">${pageOf(sec.id)}</span></a></li>`).join('')
       + `<li class="sec"><a href="#contacto"><span>Contacto</span><span class="n">${pageOf('contacto')}</span></a></li>`;
     el.innerHTML = `
-      <div class="pg l"><span class="label idx-title">Índice</span><nav class="toc" aria-label="Índice"><ol>${toc}</ol></nav></div>
+      <div class="pg l"><nav class="toc" aria-label="Índice"><ol>${toc}</ol></nav></div>
       <div class="pg r">${vbig(['NICOLÁS','ROYO'],'home-name')}
         <p class="colophon" id="colophon">Cinematographer<br><a href="#contacto">Contacto</a><br><a href="${CONTACT.instagram}">Instagram</a></p></div>`;
   }
